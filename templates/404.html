@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/previews/000/422/907/original/vector-web-icon.jpg">
+    <title>WebCrawler UEB</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename='css/404.css')}}" rel="stylesheet">
+</head>
+<body>
+    <div id="contenido">
+        <div class="row" id="center">
+            <div class="col-4" id="sad_face">
+                :c
+            </div>
+            <div class="col-8">
+                <h3>Opps, parece que la página a la que intentas acceder no existe</h3>
+                <p>La página a la que intentaste acceder no existe o no se encuentra disponible. Si el problema persiste contáctese con el proveedor.</p>
+                <a href="{{url_for('index')}}"><button type="button" class="btn btn-success">Inicio</button></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+#icon{
+    width: auto;
+    height: 5rem;
+    margin-right: 20px;
+}
+#icon2{
+    width: auto;
+    height: 3rem;
+    margin-right: 50px;
+}
+
+.search_input{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width:60vw;
+}
+.search_input2{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.send{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
