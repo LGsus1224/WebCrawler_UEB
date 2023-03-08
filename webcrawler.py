@@ -15,7 +15,7 @@ cursor.execute(
 # Hacer scraping de datos de un sitio web
 url = "https://www.ueb.edu.ec/"
 response = requests.get(url)
-soup = BeautifulSoup(response.content, "html.parser")
+soup = BeautifulSoup(response.content, "lxml")
 
 # Extraer los datos relevantes
 title = soup.title.string
