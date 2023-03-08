@@ -34,7 +34,8 @@ for link in links:
     href = link.get('href')
     if href.startswith('http'):
         # Insertar los enlaces en la base de datos MySQL
-        sql = "INSERT INTO websites (url) VALUES (%s)"
-        val = (href,)
+        sql = "INSERT INTO websites (url, title, description,fecha,hora) VALUES (%s, %s, %s, %s, %s)"
+        val = (href, title, description, (str(now.day)+"/" + str(now.month)+"/" +
+                                          str(now.year)), (str(now.hour) + ":"+str(now.minute)+":"+str(now.second)))
         cursor.execute(sql, val)
         db.commit()
