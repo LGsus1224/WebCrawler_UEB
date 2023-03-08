@@ -2,14 +2,16 @@ import mysql.connector
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+import database
 now = datetime.now()
 
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="crawler_db"
-)
+# db = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     password="",
+#     database="crawler_db"
+# )
+db = database.connect_to_database()
 cursor = db.cursor()
 
 cursor.execute(
@@ -35,11 +37,11 @@ for link in links:
     if href.startswith('http'):
         # Insertar los enlaces en la base de datos MySQL
         sql = "INSERT INTO websites (url, tittle,dominio, route,fecha,hora) VALUES (%s, %s, %s, %s, %s, %s)"
-        ru = "" 
+        ru = ""
         try:
-            ru = href.split("/", 3)[3] 
+            ru = href.split("/", 3)[3]
         except:
-            ru=""
+            ru = ""
         val = (href, title, str(href.split("/")[2]), ru, ((str(now.day)+"/" + str(now.month)+"/" + str(now.year))),
                (str(now.hour) + ":"+str(now.minute)+":"+str(now.second)))
         cursor.execute(sql, val)
