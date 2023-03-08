@@ -2,14 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from database import requestConnection, requestCursor
-now = datetime.now()
 
-# db = mysql.connector.connect(
-#     host="localhost",
-#     user="root",
-#     password="",
-#     database="crawler_db"
-# )
+now = datetime.now()
 
 db=requestConnection()
 cursor = requestCursor(db)
@@ -48,4 +42,3 @@ for link in links:
         cursor.connection.commit()
 cursor.close()
 db.close()
-
