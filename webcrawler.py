@@ -13,7 +13,7 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS websites (id INT AUTO_INCREMENT PRIMARY KEY, url VARCHAR(255), title VARCHAR(255), description TEXT,fecha varchar(10),hora varchar(8))")
+    "CREATE TABLE IF NOT EXISTS websites (id INT AUTO_INCREMENT PRIMARY KEY, url VARCHAR(255), tittle VARCHAR(255), dominio VARCHAR(255), route VARCHAR(255),fecha varchar(10),hora varchar(8))")
 
 
 # Hacer scraping de datos de un sitio web
@@ -34,8 +34,13 @@ for link in links:
     href = link.get('href')
     if href.startswith('http'):
         # Insertar los enlaces en la base de datos MySQL
-        sql = "INSERT INTO websites (url, title, description,fecha,hora) VALUES (%s, %s, %s, %s, %s)"
-        val = (href, title, description, (str(now.day)+"/" + str(now.month)+"/" +
-                                          str(now.year)), (str(now.hour) + ":"+str(now.minute)+":"+str(now.second)))
+        sql = "INSERT INTO websites (url, tittle,dominio, route,fecha,hora) VALUES (%s, %s, %s, %s, %s, %s)"
+        ru = "" 
+        try:
+            ru = href.split("/", 3)[3] 
+        except:
+            ru=""
+        val = (href, title, str(href.split("/")[2]), ru, ((str(now.day)+"/" + str(now.month)+"/" + str(now.year))),
+               (str(now.hour) + ":"+str(now.minute)+":"+str(now.second)))
         cursor.execute(sql, val)
         db.commit()
