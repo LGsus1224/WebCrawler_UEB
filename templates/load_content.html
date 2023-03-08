@@ -27,21 +27,39 @@
                     <h1>WebCrawler UEB - Busqueda Simple</h1>
                 </div>
                 <div class="mt-2 d-flex">
-                    <input class="form-control search_input2" type="search" name="search_text" id="search_text" placeholder="Ingresa la palabra">
+                    <input class="form-control search_input2" type="search" name="search_text" id="search_text" placeholder="Ingresa la palabra" required>
                     <button type="submit" class="send btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <div class="ms-3">
+                    <i class="fa-solid fa-caret-down ms-2"></i>
+                    <p class="font-weight-bold text-searched">{{texto}}</p>
                 </div>
             </form>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-3">
             <div class="col-12">
                 <table class="table table-bordered table-striped crud-table">
                     <thead>
+                        <th>N°</th>
                         <th>URL</th>
-                        <th>palabra</th>
+                        <th>Título</th>
+                        <th>Dominio</th>
+                        <th>Ruta</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
                     </thead>
                     <tbody>
-                        <td>asd</td>
-                        <td>as</td>
+                        {% for i in datos %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{i.url}}</td>
+                                <td>{{i.tittle}}</td>
+                                <td>{{i.dominio}}</td>
+                                <td>{{i.route}}</td>
+                                <td>{{i.fecha}}</td>
+                                <td>{{i.hora}}</td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

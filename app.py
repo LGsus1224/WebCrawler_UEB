@@ -1,5 +1,7 @@
-from flask import Flask, render_template,url_for,redirect,request
+from flask import Flask, render_template,url_for,redirect,request,flash
 from flask_wtf import CSRFProtect
+from database import requestConnection,requestCursor
+import re
 
 app = Flask(__name__)
 
@@ -12,12 +14,28 @@ def index():
     if request.method=='GET':
         return render_template('index.html')
     else:
-        text = request.form['search_text']
-        return redirect(url_for('search_text',texto=str(text)))
+        texto = request.form['search_text']
+        if len(texto) == 0 or re.search(r'\W', texto):
+            flash('Texto ingresado no válido', 'error')
+            return redirect(url_for('index'))
+        else:
+            return redirect(url_for('search_text',texto=str(texto)))
 
 @app.route('/search/<string:texto>',methods=['GET','POST'])
 def search_text(texto):
-    return render_template('load_content.html', texto=texto)
+    if request.method == 'GET':
+        db=requestConnection()
+        cursor=requestCursor(db)
+        cursor.execute(f"SELECT * FROM websites WHERE url LIKE '%{texto}%'")
+        datos=cursor.fetchall()
+        return render_template('load_content.html', texto=texto, datos=datos)
+    else:
+        texto = request.form['search_text']
+        if len(texto) == 0 or re.search(r'\W', texto):
+            flash('Texto ingresado no válido', 'error')
+            return redirect(url_for('index'))
+        else:
+            return redirect(url_for('search_text',texto=str(texto)))
 
 @app.errorhandler(404)
 def error404(e):
