@@ -54,6 +54,31 @@
 
 .text-searched{
     font-weight: bold;
-    top: 0;
-    margin-top: 0;
+    color: rgb(44, 44, 44);
+}
+
+.search-filter{
+    text-decoration: none;
+    color: rgb(44, 44, 44);
+    margin: 0 3rem 0 3rem;
+    padding: 0 1rem 0 1rem;
+}
+.search-filter-selected{
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(19, 19, 19);
+    margin: 0 3rem 0 3rem;
+    padding: 0 1rem 0 1rem;
+    border-bottom: solid 5px sandybrown;
+}
+
+.c-search-filter{
+    text-decoration: none;
+    color: rgb(44, 44, 44);
+}
+.c-search-filter-selected{
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(19, 19, 19);
+    border-bottom: solid 5px sandybrown;
 }

@@ -1,9 +1,9 @@
 import pymysql.cursors
 
 h = 'localhost'
-d = 'crawler_db'
-u = 'root'
-p = ''
+d = 'webcrawlerDB'
+u = 'admin'
+p = 'phpmyadmin'
 
 def requestConnection():
     db_conn = pymysql.connect(host=h, user=u, password=p, database=d)

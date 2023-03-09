@@ -46,8 +46,13 @@
                 <img src="https://static.vecteezy.com/system/resources/previews/000/422/907/original/vector-web-icon.jpg" alt="WebIcon" id="icon">
                 <h1>WebCrawler UEB - Busqueda Simple</h1>
             </div>
+            <div class="mt-3 d-flex justify-content-center align-items-center">
+                {% for i in filters %}
+                    <a href="{{url_for('home',filtro=i)}}" class="search-filter{% if i == c_filter %}-selected{% endif %}">{{filters[i]}}</a>
+                {% endfor %}
+            </div>
             <div class="mt-5 d-flex justify-content-center align-items-center">
-                <input class="form-control search_input" type="search" name="search_text" id="search_text" placeholder="Ingresa la palabra" required>
+                <input class="form-control search_input" type="search" name="search_text" id="search_text" placeholder="Ingresa la palabra" autocomplete="off" required>
                 <button type="submit" class="send btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </form>
