@@ -4,13 +4,15 @@ from database import requestConnection,requestCursor
 import re
 import requests
 from bs4 import BeautifulSoup
-
+import datetime
+import time
 app = Flask(__name__)
 
 crsf = CSRFProtect(app)
 
 app.secret_key = '9a08a27ae4a8210bd2bc3fbc96282c7adfc5c82b0a03c4e3067cec99bb8e9eb6'
-
+current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+current_time = time.strftime("%H:%M:%S")
 def insertST(cursor,lista,title,filtro):
     for i in lista:
         ru = ""
@@ -18,9 +20,16 @@ def insertST(cursor,lista,title,filtro):
             ru = i.split("/", 3)[3]
         except:
             ru = ""
-        sql = ("INSERT INTO weblinks(url,title,domain,route,filt) VALUES (%s, %s, %s, %s, %s)")
-        val = (i, title, str(i.split("/")[2]), ru, filtro)
+        sql = ("INSERT INTO weblinks(url,title,domain,route,filt,fecha,hora) VALUES (%s, %s, %s, %s, %s, %s, %s)")
+        
+        
+        
+        val = (i, title, str(i.split("/")[2]), ru, filtro,current_date,current_time)
         cursor.execute(sql,val)
+        
+        
+        
+        
         cursor.connection.commit()
 
 def deleteST(cursor,lista,nueva,title,filtro):
@@ -37,8 +46,8 @@ def updateST(cursor,original,lista,title,filtro):
                 ru = lista[i].split("/", 3)[3]
             except:
                 ru = ""
-            sql = "UPDATE weblinks SET url='%s',title='%s',domain='%s',route='%s' WHERE id=%s"
-            val = (lista[i], title, str(lista[i].split("/")[2]), ru, original[i]['id'])
+            sql = "UPDATE weblinks SET url='%s',title='%s',domain='%s',route='%s',fecha='%s' ,hora='%s'  WHERE id=%s"
+            val = (lista[i], title, str(lista[i].split("/")[2]), ru, original[i]['id'],current_date,current_time)
             cursor.execute(sql,val)
             cursor.connection.commit()
         elif len(lista)>len(original):
@@ -51,8 +60,8 @@ def updateST(cursor,original,lista,title,filtro):
                 sql = "UPDATE weblinks SET url='%s',title='%s',domain='%s',route='%s' WHERE id=%s"
                 val = (lista[i], title, str(lista[i].split("/")[2]), ru, original[i]['id'])
             else:
-                sql = ("INSERT INTO weblinks(url,title,domain,route,filt) VALUES (%s, %s, %s, %s, %s)")
-                val = (lista[i], title, str(lista[i].split("/")[2]), ru, filtro)
+                sql = ("INSERT INTO weblinks(url,title,domain,route,filt,fecha,hora) VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (lista[i], title, str(lista[i].split("/")[2]), ru, filtro,current_date,current_time)
             cursor.execute(sql,val)
             cursor.connection.commit()
         elif len(lista)<len(original):
@@ -62,8 +71,8 @@ def updateST(cursor,original,lista,title,filtro):
             except:
                 ru = ""
             if i<len(lista):
-                sql = "UPDATE weblinks SET url='%s',title='%s',domain='%s',route='%s' WHERE id=%s"
-                val = (lista[i], title, str(lista[i].split("/")[2]), ru, original[i]['id'])
+                sql = "UPDATE weblinks SET url='%s',title='%s',domain='%s',route='%s',fecha='%s' ,hora='%s'  WHERE id=%s"
+                val = (lista[i], title, str(lista[i].split("/")[2]), ru, original[i]['id'],current_date,current_time)
             else:
                 cursor.execute("DELETE FROM weblinks WHERE id=%s",(lista[i]['id']))
                 cursor.connection.commit()
@@ -88,6 +97,9 @@ def consulta(cursor,filtro, texto):
         else:
             all_links.append(str(url+href))
     all_links = set(all_links)
+    cursor.execute(
+            "CREATE TABLE IF NOT EXISTS weblinks (id INT AUTO_INCREMENT PRIMARY KEY, url VARCHAR(255), title VARCHAR(255), domain VARCHAR(255), route VARCHAR(20),filt ENUM('web','images','videos','pdf'),fecha varchar(10),hora varchar(8))")
+
     #  Tomar los links exitentes y no existentes de la DB a partir de todos los links del webcrawler
     cursor.execute("SELECT id,url FROM weblinks WHERE url NOT IN %s AND filt = %s ",(all_links,filtro))
     no_exist_links = cursor.fetchall()

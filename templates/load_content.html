@@ -46,6 +46,8 @@
                         <th>Título</th>
                         <th>Dominio</th>
                         <th>Ruta</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
                     </thead>
                     <tbody>
                         {% for i in datos %}
@@ -55,6 +57,8 @@
                                 <td>{{i.tittle}}</td>
                                 <td>{{i.domain}}</td>
                                 <td>{{i.route}}</td>
+                                <td>{{i.fecha}}</td>
+                                <td>{{i.hora}}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
