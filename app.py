@@ -98,7 +98,7 @@ def consulta(cursor,filtro, texto):
             all_links.append(str(url+href))
     all_links = set(all_links)
     cursor.execute(
-            "CREATE TABLE IF NOT EXISTS weblinks (id INT AUTO_INCREMENT PRIMARY KEY, url VARCHAR(255), title VARCHAR(255), domain VARCHAR(255), route VARCHAR(20),filt ENUM('web','images','videos','pdf'),fecha varchar(10),hora varchar(8))")
+            "CREATE TABLE IF NOT EXISTS weblinks (id INT AUTO_INCREMENT PRIMARY KEY, url VARCHAR(255), title VARCHAR(255), domain VARCHAR(255), route VARCHAR(200),filt ENUM('web','images','videos','pdf'),fecha varchar(200),hora varchar(200))")
 
     #  Tomar los links exitentes y no existentes de la DB a partir de todos los links del webcrawler
     cursor.execute("SELECT id,url FROM weblinks WHERE url NOT IN %s AND filt = %s ",(all_links,filtro))
